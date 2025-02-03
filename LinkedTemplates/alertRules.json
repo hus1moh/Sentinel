@@ -1,0 +1,117 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string",
+            "minLength": 1,
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Resource group to deploy solution resources"
+            }
+        },
+        "workspaceName": {
+            "defaultValue": "<Enter Log Analytics Workspace name>",
+            "type": "string",
+            "metadata": {
+                "description": "Workspace name for Log Analytics where Sentinel is setup"
+            }
+        },
+        "dataConnectorsKind": {
+            "type": "array",
+            "defaultValue": [],
+            "metadata": {
+                "description": "The kind of data connectors to enable"
+            }
+        },
+        "ruleGuid": {
+            "type": "string",
+            "defaultValue": "[newGuid()]",
+            "metadata": {
+                "description": "The unique guid for this scheduled alert rule"
+            }
+        },
+        "enableMicrosoftAlerts": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "enableMLAlerts": {
+            "type": "bool",
+            "defaultValue": false
+        }
+    },
+    "functions": [],
+    "variables": {
+        "aadipRuleId": "[concat('aadip', uniqueString(parameters('ruleGuid')))]",
+        "o365RuleId": "[concat('o365', uniqueString(parameters('ruleGuid')))]",
+        "mlbaSshRuleId": "[concat('mlSsh',uniqueString(parameters('ruleGuid')))]",
+        "mlbaRdpRuleId": "[concat('mlRdp',uniqueString(parameters('ruleGuid')))]"
+
+    },
+    "resources": [
+        {
+            "condition": "[and(contains(parameters('dataConnectorsKind'), 'AzureActiveDirectory'),parameters('enableMicrosoftAlerts'))]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('aadipRuleId'))]",
+            "apiVersion": "2020-01-01",
+            "kind": "MicrosoftSecurityIncidentCreation",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "properties": {
+                "alertRuleTemplateName": "532c1811-79ee-4d9f-8d4d-6304c840daa1",
+                "description": "Create incidents based on Azure Active Directory Identity Protection alerts",
+                "displayName": "Create incidents based on all alerts generated in Azure Active Directory Identity Protection",
+                "enabled": true,
+                "productFilter": "Azure Active Directory Identity Protection"
+            }
+        },
+        {
+            "condition": "[and(contains(parameters('dataConnectorsKind'), 'Office365'),parameters('enableMicrosoftAlerts'))]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('o365RuleId'))]",
+            "apiVersion": "2020-01-01",
+            "kind": "MicrosoftSecurityIncidentCreation",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "properties": {
+                "alertRuleTemplateName": "ee1d718b-9ed9-4a71-90cd-a483a4f008df",
+                "description": "Create incidents based on all alerts generated in Office 365 Advanced Threat Protection",
+                "displayName": "Create incidents based on Office 365 Advanced Threat Protection alerts",
+                "enabled": true,
+                "productFilter": "Office 365 Advanced Threat Protection"
+            }
+        },
+        {
+            "condition": "[and(contains(parameters('dataConnectorsKind'), 'Syslog'),parameters('enableMLAlerts'))]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mlbaSshRuleId'))]",
+            "apiVersion": "2020-01-01",
+            "kind": "MLBehaviorAnalytics",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "properties": {
+                "enabled": true,
+                "alertRuleTemplateName": "fa118b98-de46-4e94-87f9-8e6d5060b60b"
+            }
+        },
+        {
+            "condition": "[and(contains(parameters('dataConnectorsKind'), 'SecurityEvents'),parameters('enableMLAlerts'))]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mlbaRdpRuleId'))]",
+            "apiVersion": "2020-01-01",
+            "kind": "MLBehaviorAnalytics",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "properties": {
+                "enabled": true,
+                "alertRuleTemplateName": "737a2ce1-70a3-4968-9e90-3e6aca836abf"
+            }
+        }
+    ],
+    "outputs": {
+        "ruleId": {
+            "type": "string",
+            "value": "[parameters('ruleGUID')]"
+        }
+    }
+}
