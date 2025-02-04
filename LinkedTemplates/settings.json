@@ -14,20 +14,6 @@
                 "description": "Whether or not UEBA should be enabled"
             },
             "defaultValue": true
-        },
-        "identityProviders": {
-            "type": "array",
-            "metadata": {
-                "description": "Array of identity providers to be synched with UEBA. Valid identity providers are 'ActiveDirectory' and 'AzureActiveDirectory'"
-            }
-        },
-        "enableDiagnostics": {
-            "type": "bool",
-            "defaultValue": false
-        },
-        "settingName": {
-            "type": "string",
-            "defaultValue": "HealthSettings"
         }
     },
     "variables": {

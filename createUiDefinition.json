@@ -189,60 +189,7 @@
                           "required": false
                       },
                       "visible": "[if(steps('settings').enableUeba, true, false)]"
-                  },
-                  {
-                      "name": "enableDiagnostics",
-                      "type": "Microsoft.Common.CheckBox",
-                      "label": "Enable Sentinel health diagnostics?",
-                      "toolTip": "This will enable diagnostics settings for Analytics rules, Data Connectors and Automation rules. [Learn more](https://learn.microsoft.com/azure/sentinel/health-audit)",
-                      "constraints": {
-                          "required": false,
-                          "validationMessage": "Please select"
-                      },
-                      "visible": true
                   }
-              ]
-          },
-          {
-              "name": "solutions",
-              "label": "Content Hub Solutions",
-              "elements": [
-                  
-                 
-                  {
-                    "name": "enableSolutionsEssentials",
-                      "type": "Microsoft.Common.DropDown",
-                      "label": "Select Essentials Content Hub solutions to install",
-                      "placeholder": "",
-                      "multiselect": true,
-                      "filter": true,
-                      "filterPlaceholder": "Filter items ...",
-                      "multiLine": true,
-                      "defaultDescription": "A value for selection",
-                      "toolTip": "Select essentials solutions that you would like to install",
-                      "constraints": {
-                          "allowedValues": [
-                            {
-                                "label": "Attacker Tools Threat Protection Essentials",
-                                "description": "The Attacker Tools Threat Protection Essentials solution contains security content that is relevant for detection of tools commonly used by attackers in various campaigns",
-                                "value": "Attacker Tools Threat Protection Essentials"
-                            },
-                            {
-                                "label": "Cloud Identity Threat Protection Essentials",
-                                "description": "The Cloud Identity Threat Protection Essentials solution looks for most common cloud focused identity attacks such as Suspicious Sign-ins, privilege grants, MFA disable etc.",
-                                "value": "Cloud Identity Threat Protection Essentials"
-                            },
-                            {
-                                "label": "UEBA Essentials",
-                                "description": "The Sentinel UEBA content package will provide you with various queries based on UEBA tables, that allows you to hunt for tailored threat scenarios.",
-                                "value": "UEBA Essentials"
-                            }
-                          ],
-                          "required": false
-                      },
-                      "visible": true
-                  },
-       
               ]
           },
           {
@@ -371,11 +318,6 @@
             "pricingTier": "[basics('pricingTier')]",
             "capacityReservation": "[basics('capacityReservation')]",
             "enableUeba": "[steps('settings').enableUeba]",
-            "identityProviders": "[steps('settings').identityProviders]",
-            "enableDiagnostics": "[steps('settings').enableDiagnostics]",
-            "enableSolutions1P": "[steps('solutions').enableSolutions1P]",
-            "enableSolutionsEssentials": "[steps('solutions').enableSolutionsEssentials]",
-            "enableSolutionsTraining": "[steps('solutions').enableSolutionsTraining]",
             "enableDataConnectors": "[steps('dataConnectors').enableDataConnectors]",
             "aadStreams": "[steps('dataConnectors').aadStreams]",
             "location": "[location()]",

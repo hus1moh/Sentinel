@@ -84,27 +84,6 @@
             },
             "defaultValue": true
         },
-        "enableSolutions1P": {
-            "type": "array",
-            "metadata": {
-                "description": "The list of Content Hub 1st party solutions to deploy."
-            },
-            "defaultValue": []
-        },
-        "enableSolutionsEssentials": {
-            "type": "array",
-            "metadata": {
-                "description": "The list of Content Hub Essentials solutions to deploy."
-            },
-            "defaultValue": []
-        },
-        "enableSolutionsTraining": {
-            "type": "array",
-            "metadata": {
-                "description": "The list of Content Hub Training solutions to deploy."
-            },
-            "defaultValue": []
-        },
         "aadStreams": {
             "type": "array",
             "metadata": {
@@ -118,16 +97,6 @@
                 "description": "Whether or not UEBA should be enabled"
             },
             "defaultValue": true
-        },
-        "identityProviders": {
-            "type": "array",
-            "metadata": {
-                "description": "Array of identity providers to be synched with UEBA. Valid identity providers are 'ActiveDirectory' and 'AzureActiveDirectory'"
-            },
-            "defaultValue": []
-        },
-        "enableDiagnostics": {
-            "type": "bool"
         },
         "enableMLAlerts": {
             "type": "bool",

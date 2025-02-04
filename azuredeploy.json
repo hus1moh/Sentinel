@@ -84,27 +84,6 @@
             },
             "defaultValue": true
         },
-        "enableSolutions1P": {
-            "type": "array",
-            "metadata": {
-                "description": "The list of Content Hub 1st party solutions to deploy."
-            },
-            "defaultValue": []
-        },
-        "enableSolutionsEssentials": {
-            "type": "array",
-            "metadata": {
-                "description": "The list of Content Hub Essentials solutions to deploy."
-            },
-            "defaultValue": []
-        },
-        "enableSolutionsTraining": {
-            "type": "array",
-            "metadata": {
-                "description": "The list of Content Hub Training solutions to deploy."
-            },
-            "defaultValue": []
-        },
         "aadStreams": {
             "type": "array",
             "metadata": {
@@ -118,23 +97,6 @@
                 "description": "Whether or not UEBA should be enabled"
             },
             "defaultValue": true
-        },
-        "identityProviders": {
-            "type": "array",
-            "metadata": {
-                "description": "Array of identity providers to be synched with UEBA. Valid identity providers are 'ActiveDirectory' and 'AzureActiveDirectory'"
-            },
-            "defaultValue": []
-        },
-        "enableDiagnostics": {
-            "type": "bool"
-        },
-        "enableMLAlerts": {
-            "type": "bool",
-            "metadata": {
-                "description": "Enable ML Behavior Analytics rules"
-            },
-            "defaultValue": false
         },
         "enableScheduledAlerts": {
             "type": "bool",
@@ -212,12 +174,6 @@
                     },
                     "enableUeba": {
                         "value": "[parameters('enableUeba')]"
-                    },
-                    "identityProviders": {
-                        "value": "[parameters('identityProviders')]"
-                    },
-                    "enableDiagnostics": {
-                        "value": "[parameters('enableDiagnostics')]"
                     }
                 }
             }
@@ -253,47 +209,6 @@
                     },
                     "subscriptionId": {
                         "value": "[subscription().subscriptionId]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    }
-                }
-            }
-        },
-        {
-            "condition": "[or(not(empty(parameters('enableSolutions1P'))),not(empty(parameters('enableSolutionsEssentials'))),not(empty(parameters('enableSolutionsTraining'))))]",
-            "name": "enableSolutionsAndAlerts",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2020-06-01",
-            "resourceGroup": "[parameters('rgName')]",
-            "dependsOn": [
-                "workspaceCreation",
-                "[resourceId('Microsoft.Resources/resourceGroups',parameters('rgName'))]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/hus1moh/Sentinel/refs/heads/main/LinkedTemplates/solutionsAndAlerts.json",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "enableSolutions1P": {
-                        "value": "[replace(replace(string(parameters('enableSolutions1P')),'[',''),']','')]"
-                    },
-                    "enableSolutionsEssentials": {
-                        "value": "[replace(replace(string(parameters('enableSolutionsEssentials')),'[',''),']','')]"
-                    },
-                    "enableSolutionsTraining": {
-                        "value": "[replace(replace(string(parameters('enableSolutionsTraining')),'[',''),']','')]"
-                    },
-                    "workspaceName": {
-                        "value": "[parameters('workspaceName')]"
-                    },
-                    "severityLevels": {
-                        "value": "[replace(replace(string(parameters('severityLevels')),'[',''),']','')]"
-                    },
-                    "enableAlerts": {
-                        "value": "[parameters('enableScheduledAlerts')]"
                     },
                     "location": {
                         "value": "[parameters('location')]"
