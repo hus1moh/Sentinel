@@ -142,13 +142,6 @@
                 "description": "Enable Scheduled analytics rules"
             },
             "defaultValue": false
-        },
-        "_artifactsLocation": {
-            "type": "string",
-            "metadata": {
-                "description": "The location of resources"
-            },
-            "defaultValue": "https://raw.githubusercontent.com/garybushey/AllInOneGov/main"
         }
     },
     "variables": {},

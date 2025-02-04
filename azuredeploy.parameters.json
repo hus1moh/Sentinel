@@ -1,0 +1,63 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "rgName": {
+            "value": "" // TODO: Fill in parameter value
+        },
+        "location": {
+            "value": "" // TODO: Fill in parameter value
+        },
+        "workspaceName": {
+            "value": "" // TODO: Fill in parameter value
+        },
+        "pricingTier": {
+            "value": "PerGB2018"
+        },
+        "capacityReservation": {
+            "value": 100
+        },
+        "enableDataConnectors": {
+            "value": []
+        },
+        "severityLevels": {
+            "value": []
+        },
+        "dailyQuota": {
+            "value": 0 // TODO: Fill in parameter value
+        },
+        "dataRetention": {
+            "value": 90
+        },
+        "immediatePurgeDataOn30Days": {
+            "value": true
+        },
+        "enableSolutions1P": {
+            "value": []
+        },
+        "enableSolutionsEssentials": {
+            "value": []
+        },
+        "enableSolutionsTraining": {
+            "value": []
+        },
+        "aadStreams": {
+            "value": []
+        },
+        "enableUeba": {
+            "value": true
+        },
+        "identityProviders": {
+            "value": []
+        },
+        "enableDiagnostics": {
+            "value": false // TODO: Fill in parameter value
+        },
+        "enableMLAlerts": {
+            "value": false
+        },
+        "enableScheduledAlerts": {
+            "value": false
+        }
+    }
+}
